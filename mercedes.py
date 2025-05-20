@@ -41,7 +41,7 @@ class MercRev(MovingCameraScene):
         rectangle.next_to(trapezium, DOWN, buff=0)
         rectangle.shift(RIGHT * 0.5)
 
-        def create_tire(radius=0.4, rim_lines=5, rim_length=0.8, rim_color=WHITE):
+        def createTire(radius=0.4, rim_lines=5, rim_length=0.8, rim_color=WHITE):
             tire = Circle(radius=radius)
             tire.set_fill(BLACK, opacity=1)
             tire.set_stroke(WHITE, width=3)
@@ -60,11 +60,11 @@ class MercRev(MovingCameraScene):
 
 
 
-        tire1 = create_tire()
+        tire1 = createTire()
         tire1.next_to(trapezium, DOWN, buff=0.6)
         tire1.shift(LEFT * 1.5)
 
-        tire2 = create_tire()
+        tire2 = createTire()
         tire2.next_to(trapezium, DOWN, buff=0.6)
         tire2.shift(RIGHT * 2)
 
@@ -81,17 +81,17 @@ class MercRev(MovingCameraScene):
 
         logo = VGroup(mercLogo, text)
 
-        def follow_target(frame: Mobject):
+        def followTarget(frame: Mobject):
             frame.move_to(car.get_center())
 
-        self.camera.frame.add_updater(follow_target)
+        self.camera.frame.add_updater(followTarget)
         self.add(self.camera.frame)
 
-        def spin_tire(mObj, dt):
+        def spinTire(mObj, dt):
             mObj.rotate(-TAU * dt * 5)  
 
-        tire1.add_updater(spin_tire)
-        tire2.add_updater(spin_tire)
+        tire1.add_updater(spinTire)
+        tire2.add_updater(spinTire)
 
         self.play(
             car.animate.move_to([0, -2, 0]),
@@ -99,10 +99,10 @@ class MercRev(MovingCameraScene):
             rate_func=rf.ease_in_sine
         )
 
-        tire1.remove_updater(spin_tire)
-        tire2.remove_updater(spin_tire)
+        tire1.remove_updater(spinTire)
+        tire2.remove_updater(spinTire)
 
-        self.camera.frame.remove_updater(follow_target)
+        self.camera.frame.remove_updater(followTarget)
         self.play(
             self.camera.frame.animate.move_to(ORIGIN),
             run_time=1,
